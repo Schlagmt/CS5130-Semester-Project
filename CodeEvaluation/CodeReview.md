@@ -84,6 +84,29 @@ Once each endpoint has been reviewed and added to the TestConf.yaml, the documen
 
 RESTest allows for multiple properties and settings to be change by the user prior to API testing. This can include basic items like the number of tests to be generated and whether or not in-depth statistics are desired. An example and layout can be found [here](https://github.com/isa-group/RESTest/wiki/RESTest-configuration-files). These are saved in a .properties document in the same folder the TestConf.yml is generated within.
 
+```JSON
+# ADD HERE ANY EXTRA INFORMATION TO BE DISPLAY IN THE TEST REPORT
+
+# API name
+api=Restcountries
+
+# CONFIGURATION PARAMETERS
+
+# Test case generator
+generator=CBT
+
+# Number of test cases to be generated per operation on each iteration
+testsperoperation=50
+
+# OAS specification
+oas.path=src/test/resources/Restcountries/openapi.yaml
+
+# Test configuration file
+conf.path=src/test/resources/Restcountries/testConf.yaml
+
+...
+```
+
 ### Test Generation and Execution
 
 This is where the bulk of the RESTest work is done, it's first job is primarily set-up work. This includes, reading in the previously defined .properties and the TestConf.ymal files along with creating an output directory for all results.
@@ -96,13 +119,92 @@ In the generation section the code begins to work through the TestConf.yaml file
 
 Random
 - [RandomBooleanGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomBooleanGenerator.java) - Uses random number generation to generate a one or zero value. If one, the preset value is overridden and set to 'false'.
+```Java
+Boolean value = true;
+if (rand.nextUniform(0, 1) > 0.5) {
+    value = false;
+}
+return value;
+```
 - [RandomDateGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomDateGenerator.java) - Uses the [SimpleDateFormat](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html) from java.text to determine a date based a programmatically generated long value. This class also can use a startDate and endDate if defined by the user in the TestConf.yaml for the given variable. 
+```Java
+Date value = new Date(rand.nextLong(startDate.getTime(), endDate.getTime()));
+return value;
+```
 - [RandomEnglishWordGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomEnglishWordGenerator.java) - Uses the [Dictionary class](https://docs.oracle.com/javase/7/docs/api/java/util/Dictionary.html) provided by java.util. Based on the minWords and maxWords defined in TestConf.yaml a string of words is generated. A random part of speech is selected, and then a dictionary is queued for a random word in that part of speech.Depending on the length linking words (the, a , so, for, etc.) can be used to join words.  
+```Java
+if(getCategory()==null)
+	category = POS.getAllPOS().get(rand.nextInt(0,POS.getAllPOS().size()-1));
+	            
+// Generate word
+IndexWord dictionaryEntry=dictionary.getRandomIndexWord(category);
+if (!generateCompounds)
+	while (numberOfWords(dictionaryEntry.getLemma()) > 1)
+	  dictionaryEntry = dictionary.getRandomIndexWord(category);
+```
 - [RandomGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomGenerator.java) - Provides and refresh the random seed used for generating random numbers. This is done through the java.lang library with the class [RandomDataGenerator](https://commons.apache.org/proper/commons-math/javadocs/api-3.6/org/apache/commons/math3/random/RandomDataGenerator.html)
+```Java
+this.rand = new RandomDataGenerator();
+this.seed = rand.getRandomGenerator().nextLong();
+rand.reSeed(seed);
+```
 - [RandomNumberGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomNumberGenerator.java) - Uses random number generation to generate all types of numbers (integer, double, float, and long).
+```Java
+Object value=null;
+if (type.equals(DataType.INTEGER) || type.equals(DataType.INT32) || type.equals(DataType.INT64))
+	value = (Integer) rand.nextInt((Integer)min, (Integer)max);
+else if (type.equals(DataType.DOUBLE) || type.equals(DataType.NUMBER))
+	value = (Double) rand.nextUniform((Double) min, (Double) max);
+else if (type.equals(DataType.FLOAT)) {
+	float randomFloat = rand.getRandomGenerator().nextFloat();
+	value = (Float)min + randomFloat * ((Float)max - (Float)min);
+}
+else if (type.equals(DataType.LONG))
+	value = (Long) rand.nextLong((Long)min,(Long)max);
+return value;
+```
 - [RandomObjectGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomObjectGenerator.java) - Uses random number generation to select an object out of a given list of objects
+```Java
+value = values.get(rand.nextInt(0, values.size()-1));
+```
 - [RandomRegExpGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomRegExpGenerator.java) - Takes in a given regular expression and generates a valid input. This primarily makes use of the [Generex](https://github.com/mifmif/Generex) library which can create strings from regular expressions. 
+```Java
+String value=null;
+if (minLength!=-1 && maxLength!=-1)
+	value = generex.random(minLength,maxLength);
+else if (minLength!=-1)
+	value = generex.random(minLength);
+else
+	value = generex.random();
+return value;
+```
 - [RandomStringGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomStringGenerator.java) - Different from RandomEnglishWordGenerator, this uses [RandomStringUtil](http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/RandomStringUtils.html) from java.lang, and creates more complex strings. Based on data from TestConf.yaml, this can create specific length strings whose values are ASCII value is between 32 and 126 (inclusive), Latin alphabetic characters, Latin alphabetic characters (a-z, A-Z) with the digits 0-9, or numeric characters. It can also provide the empty string.
+```Java
+switch(stringConf) {
+    case 7:
+        generatedString = RandomStringUtils.randomAscii(stringLength);
+        break;
+    case 6:
+        generatedString = RandomStringUtils.randomAlphanumeric(stringLength);
+        break;
+    case 4:
+        generatedString = RandomStringUtils.randomAlphabetic(stringLength);
+        break;
+    case 2:
+        generatedString = RandomStringUtils.randomNumeric(stringLength);
+        break;
+    case 0:
+        generatedString = "";
+        break;
+    case 5:
+    case 3:
+    case 1:
+        generatedString = completeString(RandomStringUtils.randomAscii(stringLength), stringConf);
+        break;
+    default:
+        throw new IllegalStateException("Illegal stringConf: " + stringConf);
+}
+```
 
 \* All random number generation is done through java.util's [Random class](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html)
 
@@ -120,7 +222,26 @@ Result result = junit.run(testClass);
 Timer.stopCounting(TEST_SUITE_EXECUTION);
 ```
 
-RESTest makes use of the [JUnitCore](http://junit.sourceforge.net/javadoc/org/junit/runner/JUnitCore.html) class with the added listener [AllureJunit4](https://github.com/allure-framework/allure-java/blob/master/allure-junit4/src/main/java/io/qameta/allure/junit4/AllureJunit4.java). Each test is run and the results are recorded for report generation.
+RESTest makes use of the [JUnitCore](http://junit.sourceforge.net/javadoc/org/junit/runner/JUnitCore.html) class with the added listener [AllureJunit4](https://github.com/allure-framework/allure-java/blob/master/allure-junit4/src/main/java/io/qameta/allure/junit4/AllureJunit4.java). Each test is run, and the results are recorded for report generation.
 
 #### Reports
 
+##### Test Reports
+
+![alt text](https://github.com/isa-group/RESTest/blob/master/docs/Allure.png "Allure Report")
+
+RESTest makes use of the java library [Allure](https://docs.qameta.io/allure/#:~:text=Allure%20Framework%20is%20a%20flexible,from%20everyday%20execution%20of%20tests.) for report generation. Allure makes report generation very simple, if provided a path to the result data Allure will auto-generate an html file like the image shown above. The data provided to Allure in this case will be junit-style xml files that are generated by RESTest. 
+
+##### Coverage Reports
+
+The initial part of the coverage reports includes basic CSV file creation to house faulty tests. These files contain information pertaining to each failed test case; including testCaseId, faulty, faultyReason, fulfillsDependencies, operationId, path, httpMethod, inputContentType, outputContentType, headerParameters, pathParameters, queryParameters, formParameters, and bodyParameter. 
+
+```Java
+logger.info("Exporting test cases to CSV");
+String csvTcPath = testDataDir + "/" + PropertyManager.readProperty("data.tests.testcases.file") + "_" + testId + ".csv";
+testCases.forEach(tc -> tc.exportToCSV(csvTcPath));
+```
+
+This is handled by a function within the TestCase class, which concatenates a comma separated string with all applicable fields.
+
+The data from these CSV files are then read and added to a CoverageMeter which determines how well RESTest is testing the API. With this data RESTest is able to adapt on the fly and update tests to be able to better test the REST API. Once all tests are executed and completed the CoverageMeter will be exported to a CSV file. This includes the following values: coverageLevel, totalCoverage, inputCoverage, outputCoverage, pathCoverage, operationCoverage, inputContentTypeCoverage, outputContentTypeCoverage, parameterCoverage, statusCodeClassCoverage, parameterValueCoverage, statusCodeCoverage, and responseBodyPropertiesCoverage.
