@@ -95,16 +95,32 @@ The RESTest initializes the runner class which will be used to create the test c
 In the generation section the code begins to work through the TestConf.yaml file endpoint by endpoint. With each variable type a different function is called to create a unique value.
 
 Random
-- [RandomBooleanGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomBooleanGenerator.java) - 
-- [RandomDateGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomDateGenerator.java) - 
-- [RandomEnglishWordGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomEnglishWordGenerator.java) - 
-- [RandomGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomGenerator.java) - 
-- [RandomInputValueIterator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomInputValueIterator.java) - 
-- [RandomNumberGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomNumberGenerator.java) - 
-- [RandomObjectGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomObjectGenerator.java) - 
-- [RandomRegExpGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomRegExpGenerator.java) - 
-- [RandomStringGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomStringGenerator.java) - 
+- [RandomBooleanGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomBooleanGenerator.java) - Uses random number generation to generate a one or zero value. If one, the preset value is overridden and set to 'false'.
+- [RandomDateGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomDateGenerator.java) - Uses the [SimpleDateFormat](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html) from java.text to determine a date based a programmatically generated long value. This class also can use a startDate and endDate if defined by the user in the TestConf.yaml for the given variable. 
+- [RandomEnglishWordGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomEnglishWordGenerator.java) - Uses the [Dictionary class](https://docs.oracle.com/javase/7/docs/api/java/util/Dictionary.html) provided by java.util. Based on the minWords and maxWords defined in TestConf.yaml a string of words is generated. A random part of speech is selected, and then a dictionary is queued for a random word in that part of speech.Depending on the length linking words (the, a , so, for, etc.) can be used to join words.  
+- [RandomGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomGenerator.java) - Provides and refresh the random seed used for generating random numbers. This is done through the java.lang library with the class [RandomDataGenerator](https://commons.apache.org/proper/commons-math/javadocs/api-3.6/org/apache/commons/math3/random/RandomDataGenerator.html)
+- [RandomNumberGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomNumberGenerator.java) - Uses random number generation to generate all types of numbers (integer, double, float, and long).
+- [RandomObjectGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomObjectGenerator.java) - Uses random number generation to select an object out of a given list of objects
+- [RandomRegExpGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomRegExpGenerator.java) - Takes in a given regular expression and generates a valid input. This primarily makes use of the [Generex](https://github.com/mifmif/Generex) library which can create strings from regular expressions. 
+- [RandomStringGenerator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/random/RandomStringGenerator.java) - Different from RandomEnglishWordGenerator, this uses [RandomStringUtil](http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/RandomStringUtils.html) from java.lang, and creates more complex strings. Based on data from TestConf.yaml, this can create specific length strings whose values are ASCII value is between 32 and 126 (inclusive), Latin alphabetic characters, Latin alphabetic characters (a-z, A-Z) with the digits 0-9, or numeric characters. It can also provide the empty string.
 
-Boundary
-- [BoundaryNumberConfigurator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/boundary/BoundaryNumberConfigurator.java) - 
- - [BoundaryStringConfigurator](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/inputs/boundary/BoundaryStringConfigurator.java) - 
+\* All random number generation is done through java.util's [Random class](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html)
+
+Once the data generators have been initialized and test data has been collected, it is time for the assembly of the HTTP requests that will ping the RESTful API to be constructed. RESTest creates an array of [TestCases](https://github.com/isa-group/RESTest/blob/master/src/main/java/es/us/isa/restest/testcases/TestCase.java), a class with values for all the applicable HTTP parameters. It is provided a unique ID upon creation and the code adds the test data along with the proper endpoint. Also properly sorting URL parameter data and potential HTTP body data to be sent in the call. 
+
+TestCase also contains validation checks to assure that each test is properly built and will not fail due to incorrect values or syntax. Once all tests are completely generated, they are returned to the runner. From there the runner writes all the tests to a .java file for later execution.
+
+#### Execution
+
+```Java
+JUnitCore junit = new JUnitCore();
+junit.addListener(new io.qameta.allure.junit4.AllureJunit4());
+Timer.startCounting(TEST_SUITE_EXECUTION);
+Result result = junit.run(testClass);
+Timer.stopCounting(TEST_SUITE_EXECUTION);
+```
+
+RESTest makes use of the [JUnitCore](http://junit.sourceforge.net/javadoc/org/junit/runner/JUnitCore.html) class with the added listener [AllureJunit4](https://github.com/allure-framework/allure-java/blob/master/allure-junit4/src/main/java/io/qameta/allure/junit4/AllureJunit4.java). Each test is run and the results are recorded for report generation.
+
+#### Reports
+
