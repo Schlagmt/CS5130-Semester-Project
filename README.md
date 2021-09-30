@@ -1,6 +1,13 @@
 # CS5130-Semester-Project
 Replication of RESTest with Evaluation
 
+## Project Description 
+TODO
+
+## Motivation 
+TODO
+
+## Deliverables
 ### Deliverable 1 (09/30)
 - [Code Review](CodeEvaluation/CodeReview.md)
 
