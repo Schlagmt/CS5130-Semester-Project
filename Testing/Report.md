@@ -18,6 +18,8 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 ![1](Recreate/Stripe/CBT-Overview.png)
 ![1](Recreate/Stripe/CBT-Categories.png)
 
+#### Examination
+
 ### Yelp: Search Businesses
 
 #### Random Testing
@@ -30,6 +32,8 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 ![1](Recreate/Yelp/SearchBusiness-CBT-Overview.png)
 ![1](Recreate/Yelp/SearchBusiness-CBT-Categories.png)
 
+#### Examination
+
 ### Youtube: Search
 
 #### Random Testing
@@ -40,6 +44,8 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 
 ![1](Recreate/Youtube/CBT-Categories.png)
 ![1](Recreate/Youtube/CBT-Overview.png)
+
+#### Examination
 
 ## New Tests
 
@@ -55,6 +61,8 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 ![1](New/OMDb/CBT-Overview.png)
 ![1](New/OMDb/CBT-Categories.png)
 
+#### Examination
+
 ### Foursquare: 
 
 #### Random Testing
@@ -64,5 +72,7 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 
 #### Constraint Based Testing
 
-![1](New/Foursquare/RT-Overview.png)
-![1](New/Foursquare/RT-Categories.png)
+![1](New/Foursquare/CBT-Overview.png)
+![1](New/Foursquare/CBT-Categories.png)
+
+#### Examination
