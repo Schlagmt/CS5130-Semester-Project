@@ -20,6 +20,13 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 
 #### Examination
 
+|          | RT Pass | RT Fail | RT Pass Rate | CBT Pass | CBT Fail | CBT Pass Rate |
+| -------- | ------- | ------- | ------------ | -------- | -------- | ------------- |
+| Reported | 2000    | 0       | 100%         | 1465     | 535      | 73%           |
+| Observed | 1908    | 92      | 95%          | 144      | 1856     | 7%            |
+
+
+
 ### Yelp: Search Businesses
 
 #### Random Testing
@@ -34,6 +41,13 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 
 #### Examination
 
+|          | RT Pass | RT Fail | RT Pass Rate | CBT Pass | CBT Fail | CBT Pass Rate |
+| -------- | ------- | ------- | ------------ | -------- | -------- | ------------- |
+| Reported | 1933    | 67      | 97%          | 1839     | 161      | 92%           |
+| Observed | 1751    | 249     | 88%          | 1034     | 966      | 52%           |
+
+
+
 ### Youtube: Search
 
 #### Random Testing
@@ -46,6 +60,11 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 ![1](Recreate/Youtube/CBT-Overview.png)
 
 #### Examination
+
+|          | RT Pass | RT Fail | RT Pass Rate | CBT Pass | CBT Fail | CBT Pass Rate |
+| -------- | ------- | ------- | ------------ | -------- | -------- | ------------- |
+| Reported | 2000    | 0       | 100%         | 1487     | 513      | 74%           |
+| Observed | 2000    | 0       | 100%         | 540      | 1460     | 27%           |
 
 ## New Tests
 
@@ -63,6 +82,10 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 
 #### Examination
 
+|          | RT Pass | RT Fail | RT Pass Rate | CBT Pass | CBT Fail | CBT Pass Rate |
+| -------- | ------- | ------- | ------------ | -------- | -------- | ------------- |
+| Observed | 96      | 104     | 48%          | 92       | 108      | 46%           |
+
 ### Foursquare: 
 
 #### Random Testing
@@ -76,3 +99,7 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 ![1](New/Foursquare/CBT-Categories.png)
 
 #### Examination
+
+|          | RT Pass | RT Fail | RT Pass Rate | CBT Pass | CBT Fail | CBT Pass Rate |
+| -------- | ------- | ------- | ------------ | -------- | -------- | ------------- |
+| Observed | 91      | 109     | 46%          | 70       | 130      | 35%           |
