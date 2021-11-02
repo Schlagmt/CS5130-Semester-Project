@@ -34,13 +34,12 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 
 #### Random Testing
 
-![1](Recreate/Youtube/Search-RT-Overview.png)
-![1](Recreate/Youtube/Search-RT-Suites.png)
+![1](Recreate/Youtube/RT-Overview.png)
 
 #### Constraint Based Testing
 
-![1](Recreate/Youtube/Search-CBT-Overview.png)
-![1](Recreate/Youtube/Search-CBT-Suites.png)
+![1](Recreate/Youtube/CBT-Categories.png)
+![1](Recreate/Youtube/CBT-Overview.png)
 
 ## New Tests
 
