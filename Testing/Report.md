@@ -25,7 +25,21 @@ In the paper, ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https
 | Reported | 2000    | 0       | 100%         | 1465     | 535      | 73%           |
 | Observed | 1908    | 92      | 95%          | 144      | 1856     | 7%            |
 
+When observing random based testing with the create product endpoint for the Stripe API it was originally observed that there were no errors present. When run locally the results aligned well, however a small number of errors were found. The majority of these were "OAS disconformity" errors. RESTest attempts to probe a 4XX error result from API's, it does this be sending information that does not align with the OAS form. In this case two extra fields were sent with random data, these being "tax_code" and "type". The API in question simply ignored the extra data and returned a "200 OK" response. 
 
+Constraint based testing yielded similar results to random testing in terms of "OAS disconformity", however several 4XX errors were reported because of faulty parameters. These are not erroring so much as warnings, notifying the user that the data they are sending to the API does not fit the designated constraints of the database.
+
+```
+{
+    "error": {
+        "message": "statement_descriptor is currently only supported for products of type `service`.",
+        "param": "statement_descriptor",
+        "type": "invalid_request_error"
+    }
+}
+```
+
+This is an example of the body of the response for these warnings. It explains that "statement_descriptor" is a dependent variable, that can only be used for products of type "service".
 
 ### Yelp: Search Businesses
 
