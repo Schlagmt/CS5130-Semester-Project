@@ -188,3 +188,6 @@ In examining the random testing and constraint based testing two types of errors
 
 ## Conclusion
 
+In reviewing the recreation of tests as reported by the paper ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https://personal.us.es/amarlop/wp-content/uploads/2021/06/RESTest-Automated-Black-Box-Testing-of-RESTful-Web-APIs.pdf), relatively similar results can be seen. The validity of the tests and responses can however be called into question regarding their usefulness. Specifically with random testing of Youtube's API, the results were invalid and meaningless. This also shows the extent of random testing against complex API's, with many dependencies and rules. Many of the constraint based tests returned valuable information that can be used to improve API's. 
+
+Despite the difference in results in can be seen that the tool RESTest is viable and useful based on the results provided in the paper above. Note also the time difference between the tests, in this time the APIs could have been updated and redesigned internally. This conclusion is supported by the API's that were tested that were not within the paper. OMDb and Foursquare's tests both revealed information that can be used to build and more secure and consistent API.
