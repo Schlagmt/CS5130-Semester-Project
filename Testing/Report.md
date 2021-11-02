@@ -60,7 +60,45 @@ This is an example of the body of the response for these warnings. It explains t
 | Reported | 1933    | 67      | 97%          | 1839     | 161      | 92%           |
 | Observed | 1751    | 249     | 88%          | 1034     | 966      | 52%           |
 
+In testing random data against the search business endpoint in the Yelp API a similar set of errors were seen. There were four primary categories of errors captured.
 
+Disconformity with OAS (5 recorded errors)
+- Like the explanation above these are a result of extra data being passed in. RESTest expects the API to return an error, but instead received a "200 OK" response.
+
+Status 2XX with invalid request (invalid parameter) (37 recorded errors)
+- These are a result of the API not sending a 4XX error when given data of the wrong type. This means if the API is expecting a list of items, but instead receives a Boolean value, it is not erroring out as expected. It is instead returning a "200 OK" response, however it is worthwhile to note that all "200 OK" response contain no data as shown below.
+
+```
+{
+    "businesses": [
+        
+    ],
+    "total": 0,
+    "region": {
+        "center": {
+            "longitude": -106.44927978515625,
+            "latitude": 31.653215982221013
+        }
+    }
+}
+```
+
+Status 5XX (183 recorded errors)
+- These appear to be internal errors within the Yelp API. When the request is made the response that is given is as follows.
+
+```
+{
+    "error": {
+        "code": "INTERNAL_ERROR",
+        "description": "Something went wrong internally, please try again later."
+    }
+}
+```
+
+Status 5XX with invalid request (24 recorded errors)
+- Like the previous case, but these contain data that is not expected by the API.
+
+For constraint based testing the number of errors rose dramatically compared to the reported results. The errors experienced are like that of the random testing. With a noted rise in "Status 5XX with invalid request", "Status 5XX with valid request", and "Status 2XX with invalid request".
 
 ### Youtube: Search
 
