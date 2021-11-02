@@ -12,6 +12,6 @@ TODO
 - [Code Review](CodeEvaluation/CodeReview.md)
 
 ### Deliverable 2 (10/28)
-
+- [Testing](Testing/Report.md)
 
 ### Deliverable 3 (11/18)
