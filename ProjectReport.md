@@ -35,6 +35,34 @@ When "OAS Disconformities" are removed from local results, constraint-based test
 
 ### Yelp
 
+In reviewing the results from the observed testing a difference of 9% can be seen. The breakdown of errors is recorded below.
+
+| Error                                                 | Count | 
+| ----------------------------------------------------  | ----- | 
+| Statues 5XX                                           | 183   | 
+| Status 2XX with invalid request (invalid parameters)  | 37    |
+| Status 5XX with invalid request                       | 24    | 
+| Disconformity with OAS                                | 5     | 
+
+As noted above the validity of "OAS Disconformities" can be called into question and cannot be verified against the results reported in the academic paper above. Based on the values provided above, it can be reasoned that the difference between the observed and reported results is the error code "Status 5XX". When taken away the results align by >1%. This suggests that these errors were not present in the reported results and upon deeper investigation the error causing this status is something that can be taken out, in constraint-based testing. This fails to explain how the reported results didn't see a high number of these errors. The error itself is cause by an optional field, "offset", which as defined by Yelp "Offsets the list of returned business results by this amount" ([Yelp Documentation](https://www.yelp.com/developers/documentation/v3/business_search)). Later down on the page Yelp states "Using the offset and limit parameters, you can get up to 1000 businesses from this endpoint if there are more than 1000 results. If you request a page out of this 1000 business limit, this endpoint will return an error". This is the technicality causing the difference in observed and reported results. There is no evidence of an internal Yelp API update that could cause this difference ([Yelp Changelog](https://www.yelp.com/developers/v3/changelog)). 
+
+Constraint based testing again shows a large difference between reported and locally observed results, making for a 40% drop in pass rating. The breakdown of errors is recorded below.
+
+| Error                                                                 | Count | 
+| --------------------------------------------------------------------- | ----- | 
+| Status 5XX with valid request                                         | 404   |
+| Status 2XX with invalid request (inter-parameter dependency violated) | 211   | 
+| Status 5XX with invalid request                                       | 192   | 
+| Status 400 with (possibly) valid request                              | 121   | 
+| Status 2XX with invalid request (invalid parameter)                   | 28    | 
+| Disconformity with OAS                                                | 10    |
+
+A difference of 40% cannot be made up or explained across anyone individual error listed above, which means the differences in results is a combination of inconsistencies. First based on prior analysis we can call into question the validity of "Status 5XX with valid request" and "Disconformity with OAS". 
+
+The validity of "Status 2XX with invalid request (inter-parameter dependency violated)" can be called into question because of the inconsistency of API design and definitions ([StackExchange](https://softwareengineering.stackexchange.com/questions/329229/should-i-return-an-http-400-bad-request-status-if-a-parameter-is-syntactically)). Based on most resent documentation of HTTP error codes, a 4XX response "indicates that the server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing)." ([RFC](https://www.rfc-editor.org/rfc/rfc7231)). This shows that failure to meet the standard business logic of an API is not a valid reason for a 4XX call. It is also worth noting the Yelp API returned no valid business for these requests.
+
+The validity of "Status 5XX with invalid request" can be assured. Given our last error call we know that invalid request message framing should result in a 4XX error code. These requests are pairing incorrect data types with parameters, and accordingly receiving 5XX error codes instead of 4XX error codes.
+
 ### Youtube
 
 ## Possible Improvements
