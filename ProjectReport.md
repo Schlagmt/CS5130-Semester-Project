@@ -65,6 +65,8 @@ The validity of "Status 5XX with invalid request" can be assured. Given our last
 
 ### Youtube
 
+Of the three tests performed in this study, YouTube was by far the hardest to reproduce and to determine the validity of. Incorrect formatting of data created calls that could not be properly received by the YouTube API. Furthermore, YouTube's API imposes a limit of the number of calls that can be made in a single day by a user. This limit is under the number of tests required to meet the results showed in the paper. This calls into question how the authors were able to run this many tests in one sitting. Also, for random testing and constraint-based testing if the TestConf files provided are unaltered then the results do not match expected results at all. There are a number of updates that have been made within the last year that can help to explain the differences ([YouTube API Changelog](https://developers.google.com/youtube/v3/revision_history)). 
+
 ## Possible Improvements
 
 ## Conclusion 
