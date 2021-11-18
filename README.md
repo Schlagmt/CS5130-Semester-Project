@@ -1,10 +1,7 @@
 # CS5130-Semester-Project
 Replication of RESTest with Evaluation
 
-## Project Description 
-TODO
-
-## Motivation 
+## Reproduction of Tests
 TODO
 
 ## Deliverables
@@ -15,3 +12,4 @@ TODO
 - [Testing](Testing/Report.md)
 
 ### Deliverable 3 (11/18)
+ - [Project Report](ProjectReport.md)
