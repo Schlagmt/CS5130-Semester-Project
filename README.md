@@ -7,7 +7,7 @@ Replication of RESTest with Evaluation
 
 ## Reproduction of Tests
 In order to reproduce the results found in this repository follow the directions listed below...
-1. Proceed to [RESTest's release page on GitHub](https://github.com/isa-group/RESTest/releases/tag/restest-1.2.0) and download restest-1.2.0.zip (Note: Requires Java 8), once downloaded unzip the folder
+1. Proceed to [RESTest's release page on GitHub](https://github.com/isa-group/RESTest/releases/tag/restest-1.2.0) and download restest-1.2.0.zip (Note: Requires Java 11), once downloaded unzip the folder
 2. The configuration files needed to run the tests in this repository can be in the following folders...<br>
 [Foursquare](https://github.com/Schlagmt/CS5130-Semester-Project/tree/main/Testing/New/Foursquare/Config), [OMDb](https://github.com/Schlagmt/CS5130-Semester-Project/tree/main/Testing/New/OMDb/Config), [Stripe](https://github.com/Schlagmt/CS5130-Semester-Project/tree/main/Testing/Recreate/Stripe/Config), [Yelp](https://github.com/Schlagmt/CS5130-Semester-Project/tree/main/Testing/Recreate/Yelp/Config), [Youtube](https://github.com/Schlagmt/CS5130-Semester-Project/tree/main/Testing/Recreate/Youtube/Config) <br>
 Download the files for the test and place them in a folder with the name corresponding to the folder from GitHub in the file path "restest-1.2.0\src\test\resources"
