@@ -16,7 +16,7 @@ Download the files for the test and place them in a folder with the name corresp
 [Foursquare](https://developer.foursquare.com/docs/places-api-getting-started), [OMDb](http://www.omdbapi.com/apikey.aspx?__EVENTTARGET=freeAcct), [Stripe](https://stripe.com/docs/api/authentication), [Yelp](https://www.yelp.com/developers/documentation/v3/authentication), [Youtube](https://developers.google.com/youtube/registering_an_application) <br>
 5. Once all conditions are met run the following code in command line, results are outputted to Target folder
 ```
-java -jar restest.jar src/test/resources/%FOLDER_NAME%/%>.PROPERTIES FILE%
+java -jar restest.jar src/test/resources/%FOLDER_NAME%/%.PROPERTIES FILE%
 ```
 
 ## Deliverables
