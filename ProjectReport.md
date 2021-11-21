@@ -8,7 +8,20 @@ Personally, I chose this project because of the growing demand for APIs in web d
 
 ## Test Case Reproduction & Evaluation
 
+### Reproduction
 
+In the paper above, the RESTest application is tested against three different API's. For each API only one specific endpoint is tested, with both random testing and constraint based testing. Each test consists of 2000 test cases. This report will focus on two of the three API's that were tested, this is because of limitaions imposed by the third API, Youtube. YouTube's API imposes a limit of the number of calls that can be made in a single day by a user. This limit is under the number of tests required to meet the results showed in the paper.
+
+|                   | RT Pass | RT Fail | RT Pass Rate | CBT Pass | CBT Fail | CBT Pass Rate |
+| ----------------- | ------- | ------- | ------------ | -------- | -------- | ------------- |
+| Stripe Reported   | 2000    | 0       | 100%         | 1465     | 535      | 73%           |
+| Stripe Observed   | 1908    | 92      | 95%          | 144      | 1856     | 7%            |
+| Yelp Reported     | 1933    | 67      | 97%          | 1839     | 161      | 92%           |
+| Yelp Observed     | 1751    | 249     | 88%          | 1034     | 966      | 52%           |
+
+Above is the results of tests run within the paper (Reported) and tests run locally (Observed). For furtur detail in regards to results please refer to the [Report.md](https://github.com/Schlagmt/CS5130-Semester-Project/blob/main/Testing/Report.md) file in the testing directory.
+
+### Evaluation
 
 ## Possible Improvements
 
