@@ -86,5 +86,7 @@ There are a number of things that RESTest can implement into its design to creat
 
 ## Threats to Validity
 
+When reproducing tests performed in an academic paper there are many areas where error and difference can occur. Throughout this process there were many areas where a lack of information made perfect reproduction difficult. First, being the differences in versions of the applications, the tests performed in this study were done on version 1.3.0 while the reported results were performed on an older version. The addition of new techniques and error detection tools can lead to different results. Secondly, the test configuration files used by the program could have potentially had manual changes that could not be reproduced in this report. [RESTest](https://github.com/isa-group/icsoc-2020-supplementary-material/tree/master/oas_specifications) provided the initial OAS documents for each API, but they didn't include test configuration and properties files. This can drastically change what the program does and the specific tests that are generated. Lastly, a threat is a lack of background knowledge by the individual performing the study. I am still new to the RESTful API development process and testing cycle, errors and setting maybe occurring that I didn't have the background knowledge to catch.
+
 ## Conclusion 
 
