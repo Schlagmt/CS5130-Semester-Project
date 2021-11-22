@@ -78,7 +78,13 @@ The validity of "Status 5XX with invalid request" can be assured. Given our last
 
 ## Possible Improvements
 
+There are a number of things that RESTest can implement into its design to create a better more effective RESTful API testing service. In this section I will define three key areas for improvement.
 
+1. Improved Documentation: In the process of researching, building, and reproducing RESTest test documentation lacked information on the meaning and importance of errors. Multiple error messages are vague and lack explanation for why they are considered errors. The prime example is "OAS Disconformities", these errors are casually mentioned in the paper, but are not explained and do not appear in the raw results provided by the developers. 
+2. Updated Benchmarking: The results presented in the benchmark results do not appear to be run in the same version of RESTest that is currently available. For proper reproducibility updated benchmarking must be done or else new results cannot be easily compared to older versions.
+3. Usefulness: The validity and value of an error message grouping is not standard and can be determined to be different on a case-by-case basis. Making certain test cases virtually useless. RESTest must implement a strategy of displaying the usefulness in each error message.
+
+## Threats to Validity
 
 ## Conclusion 
 
