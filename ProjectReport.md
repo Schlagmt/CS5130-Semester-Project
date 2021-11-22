@@ -90,3 +90,4 @@ When reproducing tests performed in an academic paper there are many areas where
 
 ## Conclusion 
 
+In conclusion, the reproducibility of the tests performed in the paper ["RESTest: Automated Black-Box Testing of RESTful Web APIs"](https://personal.us.es/amarlop/wp-content/uploads/2021/06/RESTest-Automated-Black-Box-Testing-of-RESTful-Web-APIs.pdf) cannot be verified. Despite this fact, the results obtained from this report show that the RESTest tool is viable and useful in showing potential bugs within the coding and handling of API requests. Software that can find disconformities is valuable in API development as it can help to produce a product that is easier to understand for the client. It also makes the API more predictable and less inconsistent in error status and messages.
