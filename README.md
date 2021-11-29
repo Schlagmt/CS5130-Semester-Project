@@ -31,4 +31,4 @@ java -jar restest.jar src/test/resources/%FOLDER_NAME%/%.PROPERTIES FILE%
 
 ### Project Report (11/30)
 - [Project Report](ProjectReport.md)
-- [Presentation]()
+- [Presentation](Presentations/SchlagerProjectPresentation.pptx)
